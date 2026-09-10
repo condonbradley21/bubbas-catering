@@ -1,0 +1,7 @@
+import {checkCoverage,minnesotaToday,requestEmail} from './scheduling-core.mjs';
+const zip=document.querySelector('#coverage-zip'),form=document.querySelector('#coverage-form'),message=document.querySelector('#coverage-result'),dates=document.querySelector('#date-fields'),date=document.querySelector('#preferred-date'),service=document.querySelector('#requested-service'),request=document.querySelector('#request-form'),status=document.querySelector('#request-status');
+let verifiedZip='';date.min=minnesotaToday();
+function reset(){verifiedZip='';dates.disabled=true;date.value='';message.textContent='';status.textContent='';}
+zip.addEventListener('input',reset);
+form.addEventListener('submit',event=>{event.preventDefault();reset();const result=checkCoverage(zip.value);message.textContent=result.message;message.classList.toggle('coverage-error',!result.covered);if(result.covered){verifiedZip=result.zip;dates.disabled=false;date.min=minnesotaToday();date.focus();}});
+request.addEventListener('submit',event=>{event.preventDefault();try{if(!verifiedZip||checkCoverage(zip.value).zip!==verifiedZip)throw Error('Check your ZIP code first.');const link=requestEmail(verifiedZip,date.value,service.value);window.location.href=link;status.textContent='Your email app should open with the request. Review and send it there. Nothing has been booked or sent by this website. If no email app opens, call 218-270-4227.';}catch(error){status.textContent=error.message;}});
