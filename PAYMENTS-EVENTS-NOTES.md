@@ -1,10 +1,12 @@
 # Frontend integration notes
 
 ## Payments
-The Venmo section is deliberately disconnected: no recipient, link, credentials,
+The payments.html portal offers Venmo, PayPal, and credit/debit card previews.
+All methods are deliberately disconnected: no recipient, link, credentials,
 backend, transaction submission, or payment-success state exists.
 Form fields are preview-only and are never saved or sent. The payment button is
-disabled. Before enabling payments, supply the business-approved Venmo destination,
+disabled. Before enabling payments, supply business-approved payment destinations
+and a hosted card-checkout provider,
 confirm the account can accept service payments, and verify recipient, amount,
 reference, and receipt behavior. Never put secret credentials in frontend code.
 Do not treat returning from Venmo as proof of payment or booking confirmation.

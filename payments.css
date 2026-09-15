@@ -1,0 +1,37 @@
+.portal{max-width:1260px;margin:auto;padding:44px 6% 80px}
+.portal-intro{max-width:760px}.back-link{display:inline-block;margin-bottom:35px;color:#d3cbbd}
+.portal-intro .eyebrow{margin-bottom:16px}.portal-intro h1{font-size:clamp(3.4rem,6vw,5.4rem)}
+.portal-intro>p:last-child{line-height:1.8;color:#d3cbbd;margin:24px 0 32px}
+.portal-notice{display:flex;flex-direction:column;gap:8px;padding:20px 24px;border:1px solid #8b753e;border-left:4px solid var(--gold);background:#282318;line-height:1.6;margin-bottom:28px}
+.portal-notice span{color:#ddd4c0}
+.portal-layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;align-items:start}
+.portal-panel{background:var(--paper);color:var(--coal);padding:32px}
+.portal-panel fieldset{min-width:0;border:0;padding:0;margin:0}
+.portal-panel legend{font-size:1.15rem;font-weight:700;padding:0;line-height:1.6}
+.step-number{color:#aa2417;margin-right:12px}
+.field-hint{font-size:.875rem;color:#635d51;line-height:1.6}
+.method-option{display:flex;align-items:center;gap:12px;border:1px solid #c8bea9;padding:18px 14px;margin-top:12px;background:white;cursor:pointer}
+.method-option:has(input:checked){border:2px solid #aa2417;padding:17px 13px;background:#fff3dd}
+.method-option input{width:18px;height:18px;accent-color:#aa2417;flex-shrink:0}
+.method-option:focus-within{outline:3px solid #ab7215;outline-offset:3px}
+.method-name{font-weight:700;flex:1}.method-name small{display:block;font-size:.875rem;font-weight:400;line-height:1.5;color:#635d51;margin-top:5px}
+.method-status{font-size:.875rem;color:#635d51}
+.portal-panel .payment-details{margin-top:32px;border-top:1px solid #d8cdb6;padding-top:22px}
+.payment-details>label{display:block;font-weight:600;margin:20px 0 8px}
+.payment-details select,.payment-details input{width:100%;min-width:0;font:inherit;padding:14px;background:white;color:#171510;border:1px solid #a89e8c;border-radius:0}
+.payment-details input:focus-visible,.payment-details select:focus-visible{outline:3px solid #ab7215;outline-offset:2px}
+.amount-input{display:flex;align-items:center;border:1px solid #a89e8c;background:white}
+.amount-input span{padding-left:16px}.amount-input input{border:0}
+.portal-summary{background:#242019;border:1px solid #665a44;border-top:4px solid var(--gold);padding:28px}
+.portal-summary h2{font-size:2.5rem}.portal-summary .eyebrow{margin-bottom:14px}
+.portal-summary dl{display:grid;grid-template-columns:1fr 1fr;gap:18px 12px;margin:28px 0;padding-bottom:26px;border-bottom:1px solid #ffffff25;line-height:1.5}
+.portal-summary dt{color:#c9c0af}.portal-summary dd{margin:0;text-align:right;overflow-wrap:anywhere}
+#method-help{line-height:1.7;min-height:4em}
+#checkout-button{width:100%;padding:17px 14px;font:inherit;font-weight:700;border:0;background:#48463f;color:#ded9ce;cursor:not-allowed}
+.privacy-note{font-size:.875rem;color:#c9c0af;line-height:1.7}
+.booking-note{margin-top:24px;padding-top:24px;border-top:1px solid #ffffff25}
+.booking-note p{color:#c9c0af;line-height:1.7}.portal-summary .text-link{font-size:1rem;line-height:1.5}
+nav a[aria-current="page"]{color:var(--gold)}
+@media(max-width:900px){.portal-layout{grid-template-columns:1fr}}
+@media(max-width:800px){header{flex-wrap:wrap}header nav{width:100%;flex-wrap:wrap;gap:18px}header nav>a:not(.nav-button){display:inline-block}}
+@media(max-width:520px){.portal{padding:30px 5% 50px}.portal-panel,.portal-summary{padding:22px}.method-option{flex-wrap:wrap}.method-status{width:100%;padding-left:30px}.portal-summary dl{grid-template-columns:1fr}.portal-summary dd{text-align:left}.portal-summary dt{margin-top:8px}}

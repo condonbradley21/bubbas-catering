@@ -9,28 +9,10 @@
 .upcoming-event{padding:28px;background:#171510;border:1px solid #76654b}
 .upcoming-event time{display:block;color:var(--gold);font-weight:700;margin-bottom:20px}
 .upcoming-event p{line-height:1.7;color:#d3cbbd}
-.payments-section{background:#fff9e9;color:#171510}
-.payments-section .eyebrow,.payments-section em{color:#aa2417}
-.payment-layout{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
-.payment-layout p{line-height:1.8}
-.payment-steps{padding-left:24px;margin:32px 0}
-.payment-steps li{padding:0 0 24px 10px;line-height:1.6}
-.payment-steps strong,.payment-steps span{display:block}
-.payment-steps span{color:#625849;margin-top:6px}
-.payment-card{min-width:0;background:white;border:1px solid #d5c8af;border-top:5px solid #008cff;padding:32px}
-.payment-card-heading{display:flex;align-items:start;gap:18px;flex-wrap:wrap}
-.payment-card h3{font-size:2.4rem}
-.payment-badge{font-size:.875rem;background:#edf4fa;color:#334958;padding:7px 10px}
-.payment-card label{display:block;margin:20px 0 8px;font-weight:600}
-.payment-card input,.payment-card select{width:100%;min-width:0;padding:14px;border:1px solid #a89e8c;background:#fff;color:#171510;font:inherit;border-radius:0}
-.payment-card input:focus-visible,.payment-card select:focus-visible{outline:3px solid #008cff;outline-offset:2px}
-.amount-field{display:flex;align-items:center;border:1px solid #a89e8c}
-.amount-field span{padding-left:16px}.amount-field input{border:0}
-.venmo-button{width:100%;justify-content:center;margin-top:24px;border:0;font:inherit;font-weight:700}
-.venmo-button:disabled{background:#e1e8ed;color:#485764;cursor:not-allowed}
-.payment-fine{font-size:.875rem;color:#625849}
-.payments-section .text-link:hover{color:#aa2417}
 header nav{flex-wrap:wrap;gap:18px}
-@media(max-width:900px){.payment-layout{grid-template-columns:1fr;gap:28px}}
-@media(max-width:800px){header nav>a[href="#events"],header nav>a[href="#payments"]{display:inline-block}header{flex-wrap:wrap}header nav{width:100%;justify-content:center}.upcoming-events{grid-template-columns:1fr}}
+@media(max-width:800px){header nav>a[href="#events"],header nav>a[href="payments.html"]{display:inline-block}header{flex-wrap:wrap}header nav{width:100%;justify-content:center}.upcoming-events{grid-template-columns:1fr}}
 @media(max-width:520px){.payment-card,.event-empty,.upcoming-event{padding:22px}.payment-card h3{font-size:2rem}}
+.payment-link-section{display:flex;justify-content:space-between;align-items:center;gap:32px;background:#242019;border-bottom:1px solid #ffffff25}
+.payment-link-section h2{font-size:clamp(2.6rem,4vw,4rem)}.payment-link-section p{line-height:1.7;color:#d3cbbd}
+.payment-link-section .button{flex-shrink:0}
+@media(max-width:800px){.payment-link-section{display:block}.payment-link-section .button{margin-top:12px}}
