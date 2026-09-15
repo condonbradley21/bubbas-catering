@@ -20,6 +20,10 @@ for (const [page, html] of Object.entries(documents)) {
 }
 assert.ok(documents['index.html'].includes('This is a date request, not a live availability calendar.'));
 assert.ok(!documents['index.html'].includes('id="payment-preview"'));
+assert.match(documents['inquiry.html'], /action="https:\/\/formsubmit.co\/condonbradley21@gmail.com" method="POST"/);
+for (const name of ['name', 'phone', 'email', 'location', 'preferred_date', 'guest_count', 'event_type', 'message']) assert.ok(documents['inquiry.html'].includes('name="' + name + '"'));
+assert.ok(!documents['inquiry.html'].includes('Prepare inquiry email'));
+assert.ok(!documents['inquiry.html'].includes('name="_captcha" value="false"'));
 assert.match(documents['payments.html'], /id="checkout-button"[^>]*disabled/);
 for (const method of ['venmo', 'paypal', 'card']) assert.ok(documents['payments.html'].includes('value="' + method + '"'));
 await fs.mkdir('dist', {recursive: true});

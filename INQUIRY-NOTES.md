@@ -1,14 +1,18 @@
-# Event inquiry
+# Event inquiry delivery
 
-The homepage's “Talk about your event” link opens inquiry.html.
-The recipient is condonbradley21@gmail.com. Change inquiryRecipient in inquiry.mjs
-and the visible recipient/fallback links in inquiry.html together.
+inquiry.html submits a native HTTPS POST to FormSubmit for condonbradley21@gmail.com.
+The recipient must activate the form using the confirmation email triggered by
+the first submission. Inbox delivery is unverified until activation and a test
+submission are confirmed by the owner. No test inquiry was sent by the agent.
 
-This static frontend composes a mailto email. It does NOT automatically forward,
-store, queue, or deliver inquiries. Customers must review and send in their email
-app. A copyable fallback handles unavailable email apps or mailto length limits.
-No real test email was sent.
+All customer fields have names; the email field supplies the customer reply address.
+FormSubmit's default reCAPTCHA remains enabled. Its submission/confirmation page
+handles the result. There is no local success page that claims inbox delivery.
+The form works without JavaScript; JavaScript adds whitespace validation and
+duplicate-click protection. Browser Back restores the Send button.
 
-For automatic delivery, connect an approved form/email provider or server endpoint
-with server-side validation, spam protection and credentials stored as secrets.
-Only show delivery success after the service confirms acceptance.
+FormSubmit processes the contact/event details; this is disclosed next to Send.
+No credentials, card information, local storage, or email-app handoff is involved.
+To change recipients, update the action and visible address in inquiry.html, plus
+the form-action assertion and mailto allowlist in build.mjs, and activate the new
+recipient with FormSubmit. See https://formsubmit.co/ for setup documentation.
