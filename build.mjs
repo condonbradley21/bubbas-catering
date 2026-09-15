@@ -1,12 +1,12 @@
 import fs from 'node:fs/promises';
 import assert from 'node:assert/strict';
-const pages = ['index.html', 'payments.html'];
-const files = [...pages, 'styles.css', 'menu.css', 'scheduling.css', 'payments.css',
+const pages = ['index.html', 'payments.html', 'inquiry.html'];
+const files = [...pages, 'styles.css', 'menu.css', 'scheduling.css', 'payments.css', 'inquiry.css', 'inquiry.mjs',
   'scheduling.mjs', 'scheduling-core.mjs', 'mn-zips.mjs', 'events.mjs',
   'events-data.mjs', 'payments.mjs', 'bubbas-original-logo.png',
   'bubbas-bbq-pit.png', 'bubbas-chrome-logo.png', 'bbq-hero.png'];
 const documents = Object.fromEntries(await Promise.all(pages.map(async page => [page, await fs.readFile(page, 'utf8')])));
-const external = new Set(['mailto:bubbasbbqpit@gmail.com',
+const external = new Set(['mailto:bubbasbbqpit@gmail.com', 'mailto:condonbradley21@gmail.com',
   'https://www.facebook.com/profile.php?id=100057699540159', 'https://www.geonames.org/']);
 for (const [page, html] of Object.entries(documents)) {
   for (const [, link] of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
