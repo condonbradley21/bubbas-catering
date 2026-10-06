@@ -1,6 +1,8 @@
 # Event inquiry delivery
 
-inquiry.html submits a native HTTPS POST to FormSubmit for condonbradley21@gmail.com.
+inquiry.html first saves a server-backed order request, then submits a native HTTPS
+POST to FormSubmit for bubbasbbqpit@gmail.com, including its order ID. See
+ORDER-PORTAL-NOTES.md for current behavior, staff access, and deployment constraints.
 The recipient must activate the form using the confirmation email triggered by
 the first submission. Inbox delivery is unverified until activation and a test
 submission are confirmed by the owner. No test inquiry was sent by the agent.

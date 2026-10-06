@@ -21,10 +21,10 @@ console.log('PASS: all 992 MN ZIPs, ZIP+4, out-of-state/invalid codes, past/inva
 const elements=new Map();
 for(const id of ['coverage-zip','coverage-form','coverage-result','date-fields','preferred-date','requested-service','request-form','request-status'])elements.set('#'+id,{value:'',textContent:'',disabled:id==='date-fields',handlers:{},classList:{toggle(){}},focus(){this.focused=true;},addEventListener(name,fn){this.handlers[name]=fn;}});
 const get=id=>elements.get('#'+id),location={href:''};
-vm.runInNewContext((await fs.readFile(new URL('./scheduling.mjs',import.meta.url),'utf8')).replace(/^import .*;\r?\n/,''),{document:{querySelector:s=>elements.get(s)},window:{location},checkCoverage,minnesotaToday:()=> '2026-09-10',requestEmail:(zip,date,service)=>requestEmail(zip,date,service,'2026-09-10')});
+vm.runInNewContext((await fs.readFile(new URL('./scheduling.mjs',import.meta.url),'utf8')).replace(/^import .*;\r?\n/,''),{document:{querySelector:s=>elements.get(s)},window:{location},URLSearchParams,checkCoverage,minnesotaToday:()=> '2026-09-10',requestEmail:(zip,date,service)=>requestEmail(zip,date,service,'2026-09-10')});
 const submit=id=>get(id).handlers.submit({preventDefault(){}});
 get('coverage-zip').value='55401';submit('coverage-form');assert.equal(get('date-fields').disabled,false);assert.equal(get('preferred-date').focused,true);
-get('preferred-date').value='2026-09-12';get('requested-service').value='Catering';submit('request-form');assert.ok(location.href.startsWith('mailto:'));assert.ok(get('request-status').textContent.includes('Nothing has been booked'));
+get('preferred-date').value='2026-09-12';get('requested-service').value='Catering';submit('request-form');assert.ok(location.href.startsWith('inquiry.html?'));const query=new URLSearchParams(location.href.split('?')[1]);assert.equal(query.get('date'),'2026-09-12');assert.equal(query.get('service'),'Catering');assert.ok(query.get('location').includes('55401'));assert.ok(get('request-status').textContent.includes('save your order request'));
 location.href='';get('coverage-zip').value='90210';get('coverage-zip').handlers.input();assert.equal(get('date-fields').disabled,true);assert.equal(get('preferred-date').value,'');submit('request-form');assert.equal(location.href,'');
 submit('coverage-form');assert.equal(get('date-fields').disabled,true);
-console.log('PASS: simulated form state, ZIP changes invalidate dates, verified ZIP unlocks picker, email preparation and unverified ZIP rejection. No email sent.');
+console.log('PASS: form state, ZIP changes invalidate dates, verified ZIP unlocks picker, tracked order-form handoff and unverified ZIP rejection. No email sent.');
