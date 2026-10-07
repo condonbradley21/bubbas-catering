@@ -1,8 +1,8 @@
 # Bubba’s Assistant demo
 
 The website provides a guided demo at assistant.html, with illustrative menu
-prices, a deterministic integer-cent calculator, and event questions. It uses
-keyword matching until the AI service is connected, and says so on the page.
+prices, a deterministic integer-cent calculator, and event questions. Natural conversation uses the Responses API with gpt-4.1-mini, strict structured
+item IDs/quantities, and hosted menu/event data. Keyword matching is the fallback.
 No invented events are posted. Each side is an individual portion. Tax, delivery,
 staffing, and other fees are excluded rather than silently priced at zero.
 No checkout, real booking, or business email is triggered by this demo.
@@ -14,7 +14,8 @@ Demo (project alpytrayicycyhamtuvk). The guided service is deployed and connecte
 through assistant-config.mjs. Its public anonymous gateway key may be included
 in the browser; private tables remain inaccessible to that role. JWT verification
 is enabled at the function gateway. Server service credentials remain hosted.
-The API-backed AI conversation remains pending explicit API-key approval.
+OPENAI_API_KEY is stored only in Supabase Edge Function Secrets. Live verification
+currently encounters provider quota errors; successful AI estimates remain pending.
 
 ### Reproducing the deployment
 
@@ -33,13 +34,14 @@ For a new environment, complete these steps before saving is enabled. The
 frontend falls back to a clearly labeled guided demo and
 disables saving when the endpoint is missing or inaccessible.
 
-Connect OpenAI Developers to securely provision an approved API key and configure
-it as a backend secret. No AI key has been supplied, no OpenAI request is made,
-and natural-language AI behavior is not currently implemented. Finish the
-Responses API integration for gpt-4.1-mini after that connection, using structured
-item IDs/quantities and database-backed events. The server calculator must remain
-authoritative for all prices. Test against sample customer questions before
-enabling live chat. Customers should not need a provider account or login.
+Configure OPENAI_API_KEY in hosted Edge Function Secrets. It is never included in
+browser code or GitHub. Requests use store:false and bounded output. Only the
+visitor message, current selected items, public menu and confirmed events are
+sent to OpenAI; practice customer details are not. Estimates use server prices,
+not model totals. API failures return a clearly labeled guided fallback. Chat
+has no booking/payment/database-write tools. Customers need no provider login.
+Existing database limits cap calls at 60 per IP/hour and 500 globally/hour.
+These limits reduce abuse but are not a monthly billing cap.
 
 ## Migration
 
