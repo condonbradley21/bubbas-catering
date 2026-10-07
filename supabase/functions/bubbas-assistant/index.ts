@@ -1,6 +1,6 @@
 import {calculateEstimate,interpretDemo} from '../../../demo-menu.mjs';
 // Database-backed guided demo. AI requests are added after the approved key connection.
-const allowed=(Deno.env.get('ALLOWED_ORIGINS')||'https://condonbradley21.github.io').split(',').map(s=>s.trim());
+const allowed=(Deno.env.get('ALLOWED_ORIGINS')||'https://condonbradley21.github.io,http://127.0.0.1:4173').split(',').map(s=>s.trim());
 async function db(path:string,method='GET',body?:unknown){
  const root=Deno.env.get('SUPABASE_URL'),key=Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
  if(!root||!key)throw new Error('Database connection unavailable.');
@@ -10,7 +10,7 @@ async function db(path:string,method='GET',body?:unknown){
 async function hash(text:string){return Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text))),x=>x.toString(16).padStart(2,'0')).join('');}
 Deno.serve(async(request:Request)=>{
  const origin=request.headers.get('Origin')||'';
- const headers={'Content-Type':'application/json','Cache-Control':'no-store','Access-Control-Allow-Origin':origin,'Vary':'Origin','Access-Control-Allow-Methods':'POST, OPTIONS','Access-Control-Allow-Headers':'Content-Type'};
+ const headers={'Content-Type':'application/json','Cache-Control':'no-store','Access-Control-Allow-Origin':origin,'Vary':'Origin','Access-Control-Allow-Methods':'POST, OPTIONS','Access-Control-Allow-Headers':'Content-Type, Authorization, apikey'};
  const reply=(data:unknown,status=200)=>new Response(JSON.stringify(data),{status,headers});
  if(!allowed.includes(origin))return new Response('Origin not allowed',{status:403});
  if(request.method==='OPTIONS')return new Response(null,{status:204,headers});

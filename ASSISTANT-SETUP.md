@@ -7,7 +7,16 @@ No invented events are posted. Each side is an individual portion. Tax, delivery
 staffing, and other fees are excluded rather than silently priced at zero.
 No checkout, real booking, or business email is triggered by this demo.
 
-## Pending hosted setup
+## Hosted demo setup
+
+The demo database is deployed in the Starlight Systems organization as Bubba’s
+Demo (project alpytrayicycyhamtuvk). The guided service is deployed and connected
+through assistant-config.mjs. Its public anonymous gateway key may be included
+in the browser; private tables remain inaccessible to that role. JWT verification
+is enabled at the function gateway. Server service credentials remain hosted.
+The API-backed AI conversation remains pending explicit API-key approval.
+
+### Reproducing the deployment
 
 Connect Supabase and select/create a demo project, then apply the checked-in
 supabase/migrations/202610060001_demo_assistant.sql. This creates separate demo
@@ -20,8 +29,8 @@ Deploy supabase/functions/bubbas-assistant/index.ts with its dependency
 demo-menu.mjs. Keep SUPABASE_SERVICE_ROLE_KEY on the backend only. Configure
 ALLOWED_ORIGINS to the website origin. Set assistant-config.mjs endpoint to the
 actual deployed HTTPS function URL; it is a public URL, never a secret.
-No service is deployed and no hosted database is connected until these steps
-are completed. The frontend falls back to a clearly labeled guided demo and
+For a new environment, complete these steps before saving is enabled. The
+frontend falls back to a clearly labeled guided demo and
 disables saving when the endpoint is missing or inaccessible.
 
 Connect OpenAI Developers to securely provision an approved API key and configure

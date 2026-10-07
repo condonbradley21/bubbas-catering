@@ -29,7 +29,7 @@ revoke all on public.demo_menu,public.demo_events,public.demo_order_requests,pub
 -- Only the backend service can access these records. No customer-list endpoint.
 grant all on public.demo_menu,public.demo_events,public.demo_order_requests,public.demo_assistant_limits to service_role;
 create or replace function public.consume_demo_limit(p_bucket text,p_limit integer)
-returns boolean language plpgsql security definer set search_path='' as $$
+returns boolean language plpgsql security invoker set search_path='' as $$
 declare current_hits integer;
 begin
  delete from public.demo_assistant_limits where expires_at < now();

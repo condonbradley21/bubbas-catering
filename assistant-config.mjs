@@ -1,2 +1,2 @@
 // Public endpoint only. Never add service-role keys or AI keys here.
-export const assistantConfig={endpoint:null};
+export const assistantConfig={"endpoint":"https://alpytrayicycyhamtuvk.supabase.co/functions/v1/bubbas-assistant","publicKey":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFscHl0cmF5aWN5Y3loYW10dXZrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEzMzA3ODIsImV4cCI6MjEwNjkwNjc4Mn0.qslMU6cG3h080FAo67ofFiho3xtePvuTaCr7C01eTiU"};
