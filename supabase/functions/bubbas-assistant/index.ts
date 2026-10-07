@@ -70,7 +70,12 @@ Deno.serve(async(request:Request)=>{
   if(typeof body.name!=='string'||!body.name.trim()||body.name.length>100||typeof body.notes!=='string'||body.notes.length>500||typeof body.date!=='string'||!Array.isArray(body.items)||!body.items.length||! /^[a-f0-9-]{36}$/.test(body.request_key||''))return reply({error:'Please check your practice request details.'},400);
   if(body.date){const date=new Date(body.date);if(!/^\d{4}-\d{2}-\d{2}$/.test(body.date)||Number.isNaN(date.valueOf())||date.toISOString().slice(0,10)!==body.date)return reply({error:'Choose a valid date.'},400);}
   let estimate;try{estimate=calculateEstimate(body.items,menu);}catch(error){return reply({error:(error as Error).message},400);}
-  const payloadHash=await hash(JSON.stringify({name:body.name.trim(),date:body.date,notes:body.notes.trim(),items:estimate.lines.map((l:any)=>({id:l.id,quantity:l.quantity}))}));
+  if(body.event!==undefined){
+   const e=body.event;
+   if(!e||typeof e.email!=='string'||e.email.length>150||! /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.email)||typeof e.phone!=='string'||!e.phone.trim()||e.phone.length>40||typeof e.location!=='string'||!e.location.trim()||e.location.length>250||!Number.isInteger(e.guest_count)||e.guest_count<1||e.guest_count>100000||!['Catering / private gathering','Wedding','Company event','Festival / public event','Other'].includes(e.event_type)||!body.date)return reply({error:'Please check the contact and event details.'},400);
+   estimate.event_details={email:e.email.trim(),phone:e.phone.trim(),location:e.location.trim(),guest_count:e.guest_count,event_type:e.event_type};
+  }
+  const payloadHash=await hash(JSON.stringify({name:body.name.trim(),date:body.date,notes:body.notes.trim(),event:estimate.event_details||null,items:estimate.lines.map((l:any)=>({id:l.id,quantity:l.quantity}))}));
   const existing=await db('demo_order_requests?request_key=eq.'+encodeURIComponent(body.request_key)+'&select=id,estimate,payload_hash');
   if(existing.length){if(existing[0].payload_hash!==payloadHash)return reply({error:'This request was already used. Start a new practice request.'},409);return reply({id:'DEMO-'+existing[0].id,estimate:existing[0].estimate,demo:true});}
   // Unique request_key makes insert races safe; retries read the original record.
