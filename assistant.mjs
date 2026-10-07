@@ -1,3 +1,4 @@
+if(new URLSearchParams(location.search).get('embedded')==='1')document.documentElement.classList.add('assistant-embedded');
 import {demoMenu,calculateEstimate,interpretDemo,demoNotice} from './demo-menu.mjs';
 import {assistantConfig} from './assistant-config.mjs';
 const $=id=>document.getElementById(id),money=c=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(c/100);
