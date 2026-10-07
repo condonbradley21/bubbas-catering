@@ -10,7 +10,7 @@ const external = new Set(['mailto:bubbasbbqpit@gmail.com', 'mailto:condonbradley
   'https://www.facebook.com/profile.php?id=100057699540159', 'https://www.geonames.org/']);
 for (const [page, html] of Object.entries(documents)) {
   for (const [, link] of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
-    if (link === '#' || external.has(link)||link==='/signout-with-chatgpt?return_to=%2F') continue;
+    if (link === '#' || external.has(link)) continue;
     if (link.startsWith('tel:')) { assert.equal(link, 'tel:+12182704227'); continue; }
     const [path, anchor] = link.split('#');
     const target = path || page;

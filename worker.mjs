@@ -87,7 +87,7 @@ export default {async fetch(request,env){
   if(path==='/api/orders'&&request.method==='POST')return await recordOrder(request,env);
   if(path.startsWith('/api/staff/')){const actor=staffIdentity(request,env);if(!actor)return json({error:'Sign in with an authorized staff account.'},403);return await staffApi(request,env,path,actor);}
   if(path==='/staff.html'||path==='/staff'){
-   if(!request.headers.get('oai-authenticated-user-id'))return Response.redirect(new URL('/signin-with-chatgpt?return_to=%2Fstaff.html',request.url),302);
+   if(!request.headers.get('oai-authenticated-user-id'))return new Response('Staff access is unavailable. Contact the business owner.',{status:403,headers:{'Cache-Control':'no-store'}});
    if(!staffIdentity(request,env))return new Response('This account does not have staff access. Contact the business owner.',{status:403,headers:{'Cache-Control':'no-store'}});
    return serve('/staff.html',request);
   }

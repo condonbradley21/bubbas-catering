@@ -24,9 +24,7 @@ async function mutate(event,action,body){event.preventDefault();const button=eve
 $('refresh').addEventListener('click',load);$('previous').addEventListener('click',()=>{page--;load();});$('next').addEventListener('click',()=>{page++;load();});$('close-refund').addEventListener('click',()=>$('refund-dialog').close());
 $('refund-form').addEventListener('submit',async event=>{event.preventDefault();const chosen=refund;if($('confirm-id').value.trim()!==chosen.order.id){$('refund-error').textContent='The order ID does not match.';return;}$('confirm-refund').disabled=true;$('close-refund').disabled=true;try{const result=await api('/api/staff/orders/'+chosen.order.id+'/refund',{payment_id:chosen.payment.id,confirm_order_id:chosen.order.id});$('refund-dialog').close();render(result);status('Refund request recorded. Check the payment’s refund status for the provider result.');}catch(error){$('refund-error').textContent=error.message;await show(chosen.order.id);}finally{$('confirm-refund').disabled=false;$('close-refund').disabled=false;}});
 if(location.hostname.endsWith('.github.io')){
- $('main').innerHTML='<p class="eyebrow">BUBBA’S BBQ PIT · STAFF ACCESS</p><h1>STAFF PORTAL.</h1><p>GitHub Pages hosts the public website. Staff sign-in and saved orders run on our separate hosted portal.</p><p><a class="button" href="https://bubbas-bbq-catering.bradathur.chatgpt.site/staff.html" target="_top">Open staff login</a></p><p class="muted">Sign in there with your authorized staff account to view orders. No staff session is active on this GitHub page.</p>';
+ $('main').innerHTML='<p class="eyebrow">BUBBA’S BBQ PIT · STAFF ACCESS</p><h1>STAFF PORTAL.</h1><p>Staff sign-in is not available yet. The private order desk will be available once our secure login service is connected.</p><p><a class="button" href="index.html">Back to Bubba’s</a></p>';
 }else{
- $('staff-signout').href='/signout-with-chatgpt?return_to=%2F';
- $('staff-signout').hidden=false;
  load();
 }

@@ -17,7 +17,7 @@ test('staff routes require identity and explicit allowlist',async()=>{
  assert.equal(staffIdentity(new Request(origin,{headers:{'oai-authenticated-user-email':'condonbradley21@gmail.com'}}),{}),null);
  assert.equal(staffIdentity(request('/'),{STAFF_EMAILS:'someone@example.com'}),null);
  assert.equal((await worker.fetch(request('/api/staff/orders',null,false),{})).status,403);
- assert.equal((await worker.fetch(request('/staff.html',null,false),{})).status,302);
+ assert.equal((await worker.fetch(request('/staff.html',null,false),{})).status,403);
  const denied=new Request(origin+'/staff.html',{headers:{'oai-authenticated-user-id':'other','oai-authenticated-user-email':'other@example.com'}});
  assert.equal((await worker.fetch(denied,{})).status,403);
 });
