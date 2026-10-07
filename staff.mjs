@@ -2,7 +2,7 @@ const $=id=>document.getElementById(id);
 let page=0,selected=null,providers={},refund=null,listBusy=false;
 const money=cents=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(cents/100);
 const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-async function api(path,body){const response=await fetch(path,{method:body?'POST':'GET',headers:body?{'Content-Type':'application/json'}:{},body:body?JSON.stringify(body):undefined});const result=await response.json();if(!response.ok)throw new Error(result.error||'Unable to complete request.');return result;}
+async function api(path,body){const response=await fetch(path,{method:body?'POST':'GET',headers:body?{'Content-Type':'application/json'}:{},body:body?JSON.stringify(body):undefined});if(!response.headers.get('Content-Type')?.includes('application/json'))throw new Error('The order service is unavailable at this address. Use the hosted staff portal.');const result=await response.json();if(!response.ok)throw new Error(result.error||'Unable to complete request.');return result;}
 function status(message){$('staff-status').textContent=message;}
 async function load(){if(listBusy)return;listBusy=true;$('refresh').disabled=true;try{
  const result=await api('/api/staff/orders?page='+page);providers=result.providers;$('account').textContent='Signed in as '+result.staff;
@@ -23,4 +23,10 @@ function render({order:o,payments,activity}){
 async function mutate(event,action,body){event.preventDefault();const button=event.target.querySelector('button');button.disabled=true;try{const result=await api('/api/staff/orders/'+selected+'/'+action,body);render(result);await load();status(action==='status'?'Order status saved.':'Payment verified and linked.');}catch(error){status(error.message);button.disabled=false;}}
 $('refresh').addEventListener('click',load);$('previous').addEventListener('click',()=>{page--;load();});$('next').addEventListener('click',()=>{page++;load();});$('close-refund').addEventListener('click',()=>$('refund-dialog').close());
 $('refund-form').addEventListener('submit',async event=>{event.preventDefault();const chosen=refund;if($('confirm-id').value.trim()!==chosen.order.id){$('refund-error').textContent='The order ID does not match.';return;}$('confirm-refund').disabled=true;$('close-refund').disabled=true;try{const result=await api('/api/staff/orders/'+chosen.order.id+'/refund',{payment_id:chosen.payment.id,confirm_order_id:chosen.order.id});$('refund-dialog').close();render(result);status('Refund request recorded. Check the payment’s refund status for the provider result.');}catch(error){$('refund-error').textContent=error.message;await show(chosen.order.id);}finally{$('confirm-refund').disabled=false;$('close-refund').disabled=false;}});
-load();
+if(location.hostname.endsWith('.github.io')){
+ $('main').innerHTML='<p class="eyebrow">BUBBA’S BBQ PIT · STAFF ACCESS</p><h1>STAFF PORTAL.</h1><p>GitHub Pages hosts the public website. Staff sign-in and saved orders run on our separate hosted portal.</p><p><a class="button" href="https://bubbas-bbq-catering.bradathur.chatgpt.site/staff.html" target="_top">Open staff login</a></p><p class="muted">Sign in there with your authorized staff account to view orders. No staff session is active on this GitHub page.</p>';
+}else{
+ $('staff-signout').href='/signout-with-chatgpt?return_to=%2F';
+ $('staff-signout').hidden=false;
+ load();
+}
