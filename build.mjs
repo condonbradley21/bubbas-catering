@@ -4,7 +4,7 @@ const pages = ['index.html', 'payments.html', 'inquiry.html','staff.html','assis
 const files = [...pages, 'styles.css', 'menu.css', 'scheduling.css', 'payments.css', 'inquiry.css', 'inquiry.mjs',
   'scheduling.mjs', 'scheduling-core.mjs', 'mn-zips.mjs', 'events.mjs',
   'events-data.mjs', 'payments.mjs', 'bubbas-original-logo.png',
-  'bubbas-bbq-pit.png', 'bubbas-chrome-logo.png', 'bbq-hero.png','staff.css','staff.mjs','assistant.css','assistant.mjs','assistant-config.mjs','demo-menu.mjs','assistant-widget.mjs','assistant-widget.css'];
+  'bubbas-bbq-pit.png', 'bubbas-chrome-logo.png', 'bbq-hero.png','staff.css','staff.mjs','staff-legacy.mjs','staff-supabase.mjs','assistant.css','assistant.mjs','assistant-config.mjs','demo-menu.mjs','assistant-widget.mjs','assistant-widget.css'];
 const documents = Object.fromEntries(await Promise.all(pages.map(async page => [page, await fs.readFile(page, 'utf8')])));
 const external = new Set(['mailto:bubbasbbqpit@gmail.com', 'mailto:condonbradley21@gmail.com',
   'https://www.facebook.com/profile.php?id=100057699540159', 'https://www.geonames.org/']);

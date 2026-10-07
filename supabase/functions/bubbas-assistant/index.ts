@@ -31,7 +31,17 @@ Deno.serve(async(request:Request)=>{
  try{
   const raw=await request.text();if(raw.length>18000)return reply({error:'Request too large.'},413);
   let body;try{body=JSON.parse(raw);}catch{return reply({error:'Invalid request.'},400);}
-  if(!['catalog','chat','order'].includes(body.action))return reply({error:'Choose a supported action.'},400);
+  if(!['catalog','chat','order','staff-orders'].includes(body.action))return reply({error:'Choose a supported action.'},400);
+  if(body.action==='staff-orders'){
+   const authorization=request.headers.get('Authorization')||'';
+   const userResponse=await fetch(Deno.env.get('SUPABASE_URL')+'/auth/v1/user',{headers:{apikey:Deno.env.get('SUPABASE_ANON_KEY')||'',Authorization:authorization},signal:AbortSignal.timeout(10000)});
+   if(!userResponse.ok)return reply({error:'Please sign in again.'},401);
+   const user=await userResponse.json();
+   if(!user.email_confirmed_at||user.email?.toLowerCase()!=='condonbradley21@gmail.com')return reply({error:'This account does not have staff access.'},403);
+   const offset=Number.isInteger(body.page)&&body.page>=0&&body.page<=1000?body.page*20:0;
+   const orders=await db('demo_order_requests?select=id,customer_name,preferred_date,notes,estimate,status,created_at&order=created_at.desc,id.desc&limit=21&offset='+offset);
+   return reply({orders:orders.slice(0,20),hasMore:orders.length>20,staff:user.email});
+  }
   const hour=new Date().toISOString().slice(0,13),ip=request.headers.get('x-forwarded-for')||'unknown';
   const bucket=await hash(ip+'|'+hour);
   if(!await db('rpc/consume_demo_limit','POST',{p_bucket:bucket,p_limit:60}))return reply({error:'Demo request limit reached. Try again later.'},429);
